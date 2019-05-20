@@ -117,61 +117,52 @@ class LoginTDT:
 			# Todo chuyển xử lí qua trang thứ 1, với trang mặc định là thứ 0
 
 
-			time.sleep(5)
+			time.sleep(4.5)
 
 
 			if(Number_Option == 5):
 				select_HK = Select(driver.find_element_by_id("ThoiKhoaBieu1_cboHocKy"))
 				select_HK.select_by_value(str(Number_Semester))
+				# Todo chọn sesmeter mà mình muốn chọn
 
 				time.sleep(4)
-				date_element = driver.find_elements_by_xpath("//tr[@class='Headerrow']")
-				date = [x.text for x in date_element]
-				print(date,"\n")
-
-				time_element = driver.find_elements_by_xpath("//tr[@class = 'rowContent']")
-				timea = [x.text for x in time_element]
-				print(timea,)
-				#for i in range(len(timea)):
-				#	print(timea[i])
+				# Todo dừng chương trình tạm thời trong 4 giấy
+				
 				row_content = driver.find_elements_by_xpath("//tr[@class = 'rowContent']")
-				#timea = [x.text for x in time_element]
+				# Todo gán tất cả địa chỉ row_content
 
-				cells = driver.find_elements_by_xpath("//td[@class ='cell' and @rowspan > '0']")
-				sotiet = []
-				boom = []
-				sum = 0
+
+				Number_Subject = []
+	
 				for i in range(len(row_content)):
 				
 					cell = row_content[i].find_elements_by_class_name("cell")
 					
 
 					#cell = driver.find_elements_by_xpath("//td[@class ='cell' and @rowspan > '0']")
-					#boom.append(x.get_attribute("rowspan")) for x in cell]
-
 					for x in cell:
-						k = x.get_attribute("rowspan")
-						boom.append(k)
+
+						get_value_rowspan = x.get_attribute("rowspan")
+						# Todo lấy giá trị của thuộc tính rowspan
+						
 						if x.text:
-							sotiet.append(x.text + " Số tiết: " + k)
+							Number_Subject.append(x.text + " Số tiết: " + get_value_rowspan)
 						else:
-							sotiet.append("")
+							Number_Subject.append("")
 
-				print(boom,)
-
-				print(sotiet,)
-
-				
-
+				print(Number_Subject,)
+				# Todo in ra số môn cần học trong tuần, VÀ KHÚC NÀY CHƯA LÀM XONG, NHÁT VLER LUÔN Ý
 
 
 			if(Number_Option == 8):
 				driver.get('https://ketquahoctap.tdt.edu.vn/Home/DiemHocKy/')
+
 			
 			print("\nDone{:->60}{:-<12}".format("Tắt hoặc dừng cmd là tắt luôn trang wed nhé",""))
 			time.sleep(10800)
+			# Todo do nếu chạy xong chương trình, cmd tự đóng nên từ đó trang wed cũng đóng theo, không biết làm thế nào đành cho chương trình sleep-dừng trong 3h vậy :)).
 
 
 if __name__ == '__main__':
-	Account = LoginTDT("your_username","your_password")
+	Account = LoginTDT("your_username","your_Password")
 	Account.login()
